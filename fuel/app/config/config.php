@@ -210,7 +210,8 @@ return array(
 		 * );
 		 */
 		'packages'  => array(
-			//'orm',
+			'orm',
+			'less'
 		),
 
 		/**

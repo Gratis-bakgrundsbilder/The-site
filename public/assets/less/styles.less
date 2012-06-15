@@ -1,0 +1,148 @@
+
+/* CSS3 things 
+ ------------------- */
+
+.border-sizing(@v) {
+    -o-box-sizing:      @v;
+    -ms-box-sizing:     @v;
+    -moz-box-sizing:    @v;
+    -webkit-box-sizing: @v;
+    box-sizing:         @v;
+}
+ 
+ 
+.border-radius(@radius: 10px) {
+     -o-border-radius:      @radius;
+     -ms-border-radius:     @radius;
+     -moz-border-radius:    @radius;
+     -webkit-border-radius: @radius;
+     border-radius:         @radius;
+     
+	 border: 0px solid transparant;
+}
+
+.transition(@type: all, @duration: 1s, @effect: linear, @delay: 0ms) {
+    transition:          @type @duration @effect @delay;
+    -moz-transition:     @type @duration @effect @delay;
+    -webkit-transition:  @type @duration @effect @delay;
+    -o-transition:       @type @duration @effect @delay;
+}
+
+
+/* Functions
+ --------------------- */
+
+.func-icon-after(@url, @h, @w) {
+    background: url("@{url}") no-repeat;
+	content: " ";
+	display: block;
+	height: @h;
+	width: @w;
+	
+    float: right;
+    top: 5px;
+	left: 2px;
+}
+
+.func-link-color(@color: #000) {
+    color: @color !important;
+	
+	&:hover  { color: darken(@color, 10%)  !important; }
+	&:active { color: lighten(@color, 10%) !important; }
+}
+
+
+//Display a 32px box with the pattern inside
+.func-bg-prev(@name, @size: 32px) {
+    background: url("../img/patterns/@{name}.png");
+	content: " ";
+	display: block;
+	height: @size;
+	width: @size;
+	
+	margin: 3px 5px;
+	
+	border: 1px solid @d-grey;
+	
+	.transition(all, 500ms);
+	
+	&:hover {
+	    cursor: pointer;
+		border: 1px solid darken(@d-grey, 10%);
+	}
+}
+ 
+
+    /* Color preview
+     ------------------ */
+	 
+    .func-color-prev(@color, @size: 25px) {
+        .priv-func-color-prev-box(@size);
+    	.priv-func-color-prev-border(mid);
+    	margin: 0px @size + 3 5px @size + 3;
+    	
+    	background-color: @color;
+    	
+    	&:before {
+            .priv-func-color-prev-box();
+    		.priv-func-color-prev-border(left);
+    		background-color: lighten(@color, 10%);
+    		
+    		left: 0 - @size;
+    		top: -1px;
+    	}
+    	
+    	&:after {
+    	    .priv-func-color-prev-box();
+    		.priv-func-color-prev-border(right);
+    		background-color: darken(@color, 10%);
+    		
+    		left: 25px;
+    		top: 0 - @size - 1;
+    	}
+    	
+    	//Hover
+    	//------------------------------------------
+    	&:hover {
+    		.priv-func-color-prev-border(mid, @color);
+    	}
+    	
+    	&:hover:before {
+    		.priv-func-color-prev-border(left, @color);
+    	}
+    	
+    	&:hover:after {
+    		.priv-func-color-prev-border(right, @color);
+    	}
+    }
+    
+    //"Private" function
+    .priv-func-color-prev-box(@size: 25px) {
+        height: @size;
+    	width: @size;
+    	content: " ";
+    	display: block;
+    }
+    
+    .priv-func-color-prev-border(@_, @color: black) {
+        border-top: 1px solid @color;
+    	border-bottom: 1px solid @color;
+    }
+    
+    .priv-func-color-prev-border(left, @color: black) {
+    	border-left: 1px solid @color;
+    }
+    
+    .priv-func-color-prev-border(right, @color: black) {
+    	border-right: 1px solid @color;
+    }
+
+ 
+ 
+/* Style things
+ --------------------- */
+
+.hide {
+    display: none;
+	visibility: hidden;
+}

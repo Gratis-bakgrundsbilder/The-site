@@ -1,0 +1,78 @@
+/*
+ * Sony?'s reset
+ *
+ * @require some color variables.
+ *    @blue
+ *    @black
+ * @require some mixins
+ *    @border-sizing(borderRadius)
+ *    @transition(...)
+ */
+
+ 
+/* Misc
+ ----------------- */
+*, *:before, *:after { /* IE6 crash here :> */
+    position: relative;
+	
+	.border-sizing(border-box);
+} 
+
+* { .transition(color, 200ms); }
+
+
+/* Headings 
+ --------------------- */
+h1, h2, h3, h4, h5, h6 {
+    display: inline-block;
+	color: @black;
+	
+	a {
+	    color: @black;
+		
+		&:visited { color: @black; }
+		&:hover {   color: @black; }
+	}
+}
+
+/* Text
+ ------------------------- */
+/*body p {
+    font-family: Verdana;
+	font-size: 14px;
+	font-height: 20px;
+}*/
+
+
+/* Links 
+ ------------------------- */
+ 
+a {
+    color: @blue;
+	text-decoration: none;
+	
+	&:visited {
+	    color: @blue;
+		text-decoration: none;
+	}
+	
+	&:hover {
+	    color: darken(@blue, 10%);
+		text-decoration: underline;
+		cursor: pointer;
+	}
+	
+	&:active {
+	    color: lighten(@blue, 10%);
+	    text-decoration: none;
+	}
+}
+
+
+/* Misc
+ ------------------------- */
+hr {
+    border: 0px;
+   	border-top: 1px solid #e5e5e5;
+	border-bottom: 1px solid white;
+}
