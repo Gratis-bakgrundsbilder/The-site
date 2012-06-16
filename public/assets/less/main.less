@@ -1,34 +1,97 @@
+@import "reset.less";
+@import "colors.less";
 @import "styles.less"; //Vanliga funktioner, som .border-radius()
+
+
+
+// ### Syntax _guidelines_ ###
+//
+//  #someSelector {
+//      //@variables
+//
+//      //Specificy styles, like color, border, shadow, font-family
+//
+//      //transitions, animations, etc
+//
+//      //width, height
+//
+//      //margin, display type, padding
+//  }
 
 .container-fluid {
 
 
-    // Search
-    //----------------------------------------
+    margin: 20px 25px;
 
-    form.form-search {
-        input[type=search] {
+
+
+    //--------------------------------------------------------------
+    // Header
+    //--------------------------------------------------------------
+
+    header {
+        h1 {
+            margin-bottom: 25px;
         }
     }
 
 
+
+
+    //--------------------------------------------------------------
+    // Search
+    //--------------------------------------------------------------
+
+    form.form-search {
+        input[type=search] {
+
+        }
+    }
+
+
+
+    //--------------------------------------------------------------
     // Thumb grid
-    //----------------------------------------
+    //--------------------------------------------------------------
 
-    a {
-        border: 1px solid blacK;
-        border-radius: 5px;
+    a.border {
+        @maxWidth   = 300px;
+        @minWidth   = 150px;
+        @height     = @maxWidth / 16 * 9; //16:9 aspect ratio
+        @borderSize = 10px;
+        @margin     = 25px;
 
-        max-width: 300px;
-        min-width: 150px;
-        width: 100%;
+        .border-radius(10px);
+        box-shadow: 0px 0px 0px 1px @ddd-grey;
+        border:     @borderSize solid white;
 
-        display: inline-block;
-        padding: 10px;
-        margin: 20px;
+        .transition(all, 250ms);
 
+        max-width: @maxWidth;
+        min-width: @minWidth;
+        height:    @height;
+        width:     100%;
+
+        overflow: hidden;
+        display:  inline-block;
+        margin:   0px @margin @margin 0px;
+
+        &:hover {
+            box-shadow: 0px 0px 0px 1px @ddd-grey,
+                        0px 0px 8px 3px @grey;
+
+            img {
+
+            }
+        }
+
+
+        //TODO: Rounded corners
         img {
-            width: 100%;
+            position: absolute;
+
+            max-width: @maxWidth - @borderSize * 2;
+            min-width: @minWidth - @borderSize * 2;
         }
     }
 }
