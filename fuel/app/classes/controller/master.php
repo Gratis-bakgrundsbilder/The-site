@@ -34,7 +34,7 @@ class Controller_Master extends Controller
 	/**
 	 * Show ONE image
 	 */
-	public function action_showImage()
+	public function action_showImage($id)
 	{
 		return Response::forge(ViewModel::forge('template/singleImage'));
 	}
