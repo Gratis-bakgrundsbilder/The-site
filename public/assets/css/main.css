@@ -47,7 +47,7 @@ hr {
 }
 .container-fluid { margin:20px 25px; }
 .container-fluid header h1 { margin-bottom:25px; }
-.container-fluid a.border {
+.container-fluid .image-container a.border {
 	-o-border-radius:10px;
 	-ms-border-radius:10px;
 	-moz-border-radius:10px;
@@ -68,8 +68,8 @@ hr {
 	display:inline-block;
 	margin:0px 25px 25px 0px;
 }
-.container-fluid a.border:hover { box-shadow:0px 0px 0px 1px #999999, 0px 0px 8px 3px #e6e6e6; }
-.container-fluid a.border img {
+.container-fluid .image-container a.border:hover { box-shadow:0px 0px 0px 1px #999999, 0px 0px 8px 3px #e6e6e6; }
+.container-fluid .image-container a.border img {
 	position:absolute;
 	max-width:280px;
 	min-width:130px;

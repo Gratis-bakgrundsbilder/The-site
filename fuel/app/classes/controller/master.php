@@ -32,6 +32,16 @@ class Controller_Master extends Controller
 
 
 	/**
+	 * Show ONE image
+	 */
+	public function action_showImage()
+	{
+		return Response::forge(ViewModel::forge('template/singleImage'));
+	}
+
+ 
+
+	/**
 	 * Lists the images
 	 */
 	public function action_listImages()
@@ -45,6 +55,6 @@ class Controller_Master extends Controller
 	 */
 	public function action_404()
 	{
-		return Response::forge(ViewModel::forge('welcome/404'), 404);
+		return Response::forge(ViewModel::forge('404'), 404);
 	}
 }

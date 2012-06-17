@@ -1,6 +1,6 @@
-@import "reset.less";
-@import "colors.less";
-@import "styles.less"; //Vanliga funktioner, som .border-radius()
+@import "inc/reset.less";
+@import "inc/colors.less";
+@import "inc/styles.less"; //Vanliga funktioner, som .border-radius()
 
 
 
@@ -20,78 +20,18 @@
 
 .container-fluid {
 
-
     margin: 20px 25px;
 
 
-
-    //--------------------------------------------------------------
     // Header
-    //--------------------------------------------------------------
+    @import "header.less";
 
-    header {
-        h1 {
-            margin-bottom: 25px;
-        }
-    }
-
-
-
-
-    //--------------------------------------------------------------
     // Search
-    //--------------------------------------------------------------
+    @import "search.less";
 
-    form.form-search {
-        input[type=search] {
+    // Thumb grid, the list of thumbs you see at the startpage
+    @import "thumb_grind.less";
 
-        }
-    }
-
-
-
-    //--------------------------------------------------------------
-    // Thumb grid
-    //--------------------------------------------------------------
-
-    a.border {
-        @maxWidth   = 300px;
-        @minWidth   = 150px;
-        @height     = @maxWidth / 16 * 9; //16:9 aspect ratio
-        @borderSize = 10px;
-        @margin     = 25px;
-
-        .border-radius(10px);
-        box-shadow: 0px 0px 0px 1px @ddd-grey;
-        border:     @borderSize solid white;
-
-        .transition(all, 250ms);
-
-        max-width: @maxWidth;
-        min-width: @minWidth;
-        height:    @height;
-        width:     100%;
-
-        overflow: hidden;
-        display:  inline-block;
-        margin:   0px @margin @margin 0px;
-
-        &:hover {
-            box-shadow: 0px 0px 0px 1px @ddd-grey,
-                        0px 0px 8px 3px @grey;
-
-            img {
-
-            }
-        }
-
-
-        //TODO: Rounded corners
-        img {
-            position: absolute;
-
-            max-width: @maxWidth - @borderSize * 2;
-            min-width: @minWidth - @borderSize * 2;
-        }
-    }
+    // Single image
+    @import "single_image.less";
 }
