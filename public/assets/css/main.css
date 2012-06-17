@@ -74,4 +74,20 @@ hr {
 	max-width:280px;
 	min-width:130px;
 }
-.container-fluid .single-image-wrapper .image-border img { width:80%; }
+.container-fluid .single-image-wrapper .image-border {
+	border:1px solid black;
+	padding:15px;
+	width:80%;
+}
+.container-fluid .single-image-wrapper div[role="details"] {
+	background-color:#dcdddc;
+	-o-border-radius:10px;
+	-ms-border-radius:10px;
+	-moz-border-radius:10px;
+	-webkit-border-radius:10px;
+	border-radius:10px;
+	border:0px solid transparant;
+	margin-top:10px;
+	padding:10px;
+	width:80%;
+}
