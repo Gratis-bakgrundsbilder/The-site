@@ -74,3 +74,4 @@ hr {
 	max-width:280px;
 	min-width:130px;
 }
+.container-fluid .single-image-wrapper .image-border img { width:80%; }
