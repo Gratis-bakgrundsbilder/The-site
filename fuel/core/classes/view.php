@@ -30,8 +30,7 @@ class View
 	/**
 	 * @var  array  Global view data
 	 */
-	//protected static $global_data = array();
-	static $global_data = array(); //Sony? changed this to allow ViewModel::set_global() :)
+	protected static $global_data = array();
 
 	/**
 	 * @var  array  Holds a list of specific filter rules for global variables

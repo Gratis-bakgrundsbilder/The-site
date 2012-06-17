@@ -261,44 +261,6 @@ abstract class ViewModel
 			return '';
 		}
 	}
-
-
-
-
-	//Copied from classes/view.php. Wanted this function here too. Note: This required to remove the protected word from classes/view::$global_data.
-	/**
-	 * Sets a global variable, similar to [static::set], except that the
-	 * variable will be accessible to all views.
-	 *
-	 *     View::set_global($name, $value);
-	 *
-	 * @param   string  variable name or an array of variables
-	 * @param   mixed   value
-	 * @param   bool    whether to filter the data or not
-	 * @return  void
-	 */
-	public static function set_global($key, $value = null, $filter = null)
-	{
-		if (is_array($key))
-		{
-			foreach ($key as $name => $value)
-			{
-				if ($filter !== null)
-				{
-					View::$global_filter[$name] = $filter;
-				}
-				View::$global_data[$name] = $value;
-			}
-		}
-		else
-		{
-			if ($filter !== null)
-			{
-				View::$global_filter[$key] = $filter;
-			}
-			View::$global_data[$key] = $value;
-		}
-	}
 }
 
 

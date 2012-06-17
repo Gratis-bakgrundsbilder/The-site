@@ -19,13 +19,13 @@ class View_template_index extends ViewModel
         $name2  = 'bridge';
         $imgUrl = Uri::base(0) . 'assets/img/';
 
-        $this->set_global('baseUrl', Uri::base(0));
+        View::set_global('baseUrl', Uri::base(0));
 
-        $this->set_global('testImg',  $imgUrl . 'test-wallpapers/thumb/1980x1080/'. $name .'.jpg');
-        $this->set_global('testImg2', $imgUrl . 'test-wallpapers/thumb/1024x638/'.  $name2 .'.jpg');
+        View::set_global('testImg',  $imgUrl . 'test-wallpapers/thumb/1980x1080/'. $name .'.jpg');
+        View::set_global('testImg2', $imgUrl . 'test-wallpapers/thumb/1024x638/'.  $name2 .'.jpg');
 
-        $this->set_global('testImgLink',  $this->baseUrl . 'image/' . 0 . '/'. $name);
-        $this->set_global('testImgLink2', $this->baseUrl . 'image/' . 1 . '/'. $name2);
+        View::set_global('testImgLink',  $this->baseUrl . 'image/' . 0 . '/'. $name);
+        View::set_global('testImgLink2', $this->baseUrl . 'image/' . 1 . '/'. $name2);
 
 
 
