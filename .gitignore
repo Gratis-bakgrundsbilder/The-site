@@ -1,3 +1,4 @@
 fuel/app/logs/*/*/*
 fuel/app/cache/*/*
 public/assets/img/wallpapers/*
+public/assets/css/main.css
