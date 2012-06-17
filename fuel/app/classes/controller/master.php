@@ -1,45 +1,47 @@
 <?php
 
 /**
- * The Welcome Controller.
+ * The Master controller
  *
- * A basic controller example.  Has examples of how to set the
- * response body and status.
+ * This controller load the right page and take care
+ * of search querys etc.
  * 
- * @package  app
- * @extends  Controller
+ * @author Sony?
  */
 class Controller_Master extends Controller
 {
 
 	/**
-	 * The basic welcome message
-	 * 
-	 * @access  public
-	 * @return  Response
+	 * Load the index page
+	 *
+	 * @require template/index
 	 */
 	public function action_index()
 	{
-		return Response::forge(ViewModel::forge('index'));
+		return Response::forge(ViewModel::forge('template/index'));
 	}
 
+
 	/**
-	 * A typical "Hello, Bob!" type example.  This uses a ViewModel to
-	 * show how to use them.
-	 * 
-	 * @access  public
-	 * @return  Response
+	 * Search result 
 	 */
-	public function action_hello()
+	public function action_search()
 	{
-		return Response::forge(ViewModel::forge('welcome/hello'));
+		return Response::forge(ViewModel::forge(''));
 	}
+
+
+	/**
+	 * Lists the images
+	 */
+	public function action_listImages()
+	{
+		return Response::forge(ViewModel::forge(''));
+	}
+	
 
 	/**
 	 * The 404 action for the application.
-	 * 
-	 * @access  public
-	 * @return  Response
 	 */
 	public function action_404()
 	{
