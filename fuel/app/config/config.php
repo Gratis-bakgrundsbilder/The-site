@@ -211,7 +211,7 @@ return array(
 		 */
 		'packages'  => array(
 			'orm',
-			'less'
+			'fuel-less'
 		),
 
 		/**
