@@ -1,4 +1,6 @@
 fuel/app/logs/*/*/*
 fuel/app/cache/*/*
+fuel/app/config/flickrAPI.php
+fuel/app/config/production/*
 public/assets/img/wallpapers/*
 public/assets/css/main.css

@@ -1,6 +1,8 @@
 <?php
 
 
+namespace Fuel\Tasks;
+
 /**
  * Flicker crawler
  *
@@ -23,11 +25,16 @@
  *
  * @author Sony? aka Sawny
  **/
-class Crawler
+class FlickerCrawler
 {
-    public function __construct()
+    public function run()
     {
-        # code...
+        echo "Hello world!\n";
+
+        $config = \Fuel\Core\Config::load('flickrAPI');
+        $apiKey = $config['key'];
+
+        $this->flickrGet($apiKey, 'photos.search', array('tags' => 'bokeh'));
     }
 
 
@@ -57,6 +64,39 @@ class Crawler
     public function saveResults()
     {
         # code...
+    }
+
+
+
+    /**
+     * Helper function to use flickrs API
+     */
+    private function flickrGet($apiKey, $method, $args = array())
+    {
+        //Prepare
+        $args += array('api_key' => $apiKey,
+                       'method'  => 'flickr.'. $method,
+                       'format'  => 'php_serial');
+
+        $encoded_args = array();
+
+        foreach ($args as $k => $v) {
+            $encoded_args[] = urlencode($k) .'='. urlencode($v);
+        }
+        
+        
+        //Call API
+        $url  = "http://api.flickr.com/services/rest/?". implode('&', $encoded_args);
+        $resp = unserialize(file_get_contents($url));
+
+
+        //Return the result / error
+        if($resp['stat'] == "ok") {
+            return $resp;
+        }
+        else {
+            return false;
+        }
     }
 
 }
