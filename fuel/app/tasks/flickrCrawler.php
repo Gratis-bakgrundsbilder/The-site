@@ -34,7 +34,10 @@ class FlickrException extends \Exception {}
 class FlickrCrawler
 {
     private $apikey; //Neccesary for this class to work. Value set in the run() method.
+    private $wallpaperLocationFull; //Set in run();
+    private $wallpaperLocationRelative; //Set in run();
    
+    //TODO: get from DB
     private $licenses = array('Attribution licenses'                         => 4,        
                               'Attribution-NoDerivs License'                 => 6,
                               'Attribution-NonCommercial-NoDerivs License'   => 3,
@@ -50,16 +53,21 @@ class FlickrCrawler
                               5 => 'Attribution-ShareAlike License');
 
 
+
     public function run()
     {
+        //Variables, config, etc
         $config = \Fuel\Core\Config::load('flickrAPI');
         $this->apiKey = $config['key'];
+
+        $this->wallpaperLocationFull     = DOCROOT . 'public/assets/img/wallpapers/' . date('Y-m-d') . '/';
+        $this->wallpaperLocationRelative = '/assets/img/wallpapers/' . date('Y-m-d') . '/';
 
 
         echo "Hello world!\n";
 
 
-        $this->crawl(10, 'macro');
+        $this->crawl(7, 'bokeh');
     }
 
 
@@ -90,7 +98,8 @@ class FlickrCrawler
         try {
             $result = $this->flickrGet('photos.search', $args);
 
-            $pictures = array(); //All pictures that match our criterias will be stored here with their data
+            $pictures  = array(); //All pictures that match our criterias will be stored here with their data
+            $db_result = array();
             $i = -1; //pictures index
 
             //Loop through all images we fetch
@@ -108,8 +117,7 @@ class FlickrCrawler
                     if($image['width']  > $minResolution[0] AND 
                        $image['height'] > $minResolution[1])
                     {
-                        //Saves the biggest image url and width + height.
-                        $pictures[$i]['url']    = $image['source'];
+                        //Saves the biggest width + height.
                         $pictures[$i]['width']  = $image['width'];
                         $pictures[$i]['height'] = $image['height'];
 
@@ -117,30 +125,52 @@ class FlickrCrawler
                     }
                 }
 
-                //TODO: Does image exists in DB? (Protip: save each image ID)
-
-
-                if($isAnImageWeCanUse)
+                //canWeUse? AND 'Has we not fetched this image before?'
+                if($isAnImageWeCanUse AND \Model_Image::find()->where('orginal_id', $id)->count() === 0) //Note: This method is faster than getting the whole image and calculate the checksum and first then check against every checksum in the database. But: This method dosen't finds duplicates. Bets solutions is probably to create an new task that runs every day that removes duplicates.
                 {
+                    $newFilename = $id .'.'. pathinfo($image['source'], PATHINFO_EXTENSION);
+
                     $info = $this->flickrGet('photos.getInfo', array('photo_id' => $id));
                     $info = $info['photo'];
 
-                    $pictures[$i]['id']                 = $id;
-                    $pictures[$i]['title']              = $photo['title'];
-                    $pictures[$i]['desc']               = $info['description']['_content'];
-                    $pictures[$i]['license']            = $this->licenses[$info['license']];
-                    $pictures[$i]['author']['username'] = $info['owner']['username'];
-                    $pictures[$i]['author']['realname'] = $info['owner']['realname'];
-                    $pictures[$i]['author']['link']     = 'http://www.flickr.com/photos/'. $info['owner']['nsid'];
-                    $pictures[$i]['orginalUrl']         = 'http://www.flickr.com/photos/'. $info['owner']['nsid'] .'/'. $id;
+                    $pictures[$i]['orginal_id']      = $id;
+                    $pictures[$i]['title']           = $photo['title'];
+                    $pictures[$i]['desc']            = $info['description']['_content'];
+                    $pictures[$i]['license']         = $info['license'];
+                    $pictures[$i]['author_username'] = $info['owner']['username'];
+                    $pictures[$i]['author_realname'] = $info['owner']['realname'];
+                    //$pictures[$i]['author_link']     = 'http://www.flickr.com/photos/'. $info['owner']['nsid'];
+                    $pictures[$i]['orginal_url']     = 'http://www.flickr.com/photos/'. $info['owner']['nsid'] .'/'. $id;
+                    $pictures[$i]['url']             = $this->wallpaperLocationRelative . $newFilename; //(Url at _our_ server)
 
-                    //TODO: Save to the DB!
+
+                    //TODO: Process the image and save it (resize)
+
+
+                    //Does the directory exists? Not? Create it!
+                    if(!is_dir($this->wallpaperLocationFull)) {
+                        if(!mkdir($this->wallpaperLocationFull)) {
+                            throw new Exception("Can't create '". $this->wallpaperLocationFull ."'.");
+                        }
+                    }
+
+                    //Save it!
+                    $this->downloadImageAndSave($image['source'], $newFilename);
+                    $db_result[] = \Model_Image::forge($pictures[$i])->save();
+
                 }
             }
 
             print_r($pictures);
+            print_r($db_result);
         }
         catch (FlickrException $e) {
+            echo PHP_EOL . \CLI::color("Error!\n", 'red');
+
+            echo 'Message:    '. $e->getMessage() . PHP_EOL .
+                 'Error code: '. $e->getCode();
+        }
+        catch (Exception $e) {
             echo PHP_EOL . \CLI::color("Error!\n", 'red');
 
             echo 'Message:    '. $e->getMessage() . PHP_EOL .
@@ -153,11 +183,20 @@ class FlickrCrawler
 
 
     /**
+     * Downloads an image
      *
+     * @todo Return true/false if succeded
      */
-    public function saveResults()
+    private function downloadImageAndSave($imageUrl, $newFilename)
     {
-        echo "SaveResult!";
+        //Took from @link http://stackoverflow.com/a/724449/996028
+        $ch = curl_init($imageUrl);
+        $fp = fopen($this->wallpaperLocationFull . $newFilename, 'wb');
+        curl_setopt($ch, CURLOPT_FILE, $fp);
+        curl_setopt($ch, CURLOPT_HEADER, 0);
+        curl_exec($ch);
+        curl_close($ch);
+        fclose($fp);
     }
 
 

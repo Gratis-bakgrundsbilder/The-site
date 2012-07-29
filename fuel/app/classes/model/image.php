@@ -30,7 +30,7 @@ class Model_Image extends \Orm\Model
 		),
 		'orginal_id' => 
 		array (
-			'data_type' => 'int',
+			'data_type' => 'varchar',
 			'label' => 'Orginal id',
 			'null' => true,
 			'validation' => 
@@ -41,14 +41,14 @@ class Model_Image extends \Orm\Model
 				),
 				'numeric_max' => 
 				array (
-					0 => 2147483647,
+					0 => 18446744073709551615,
 				),
 			),
 			'form' => 
 			array (
 				'type' => 'number',
 				'min' => 0,
-				'max' => 2147483647,
+				'max' => 18446744073709551615,
 			),
 		),
 		'url' => 
@@ -158,10 +158,10 @@ class Model_Image extends \Orm\Model
 				'maxlength' => 255,
 			),
 		),
-		'licens' => 
+		'license' => 
 		array (
 			'data_type' => 'tinyint',
-			'label' => 'Licens',
+			'label' => 'License',
 			'null' => true,
 			'validation' => 
 			array (
@@ -183,18 +183,14 @@ class Model_Image extends \Orm\Model
 		),
 		'date' => 
 		array (
-			'data_type' => 'string',
+			'data_type' => 'timestamp',
 			'label' => 'Date',
-			'null' => false,
-			'default' => 'CURRENT_TIMESTAMP',
-			'validation' => 
-			array (
-				0 => 'required',
-			),
+			'null' => true,
+			'default' => null,
 			'form' => 
 			array (
 				'type' => 'text',
-				'value' => 'CURRENT_TIMESTAMP',
+				'value' => '',
 			),
 		),
 		'width' => 
